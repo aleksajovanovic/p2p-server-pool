@@ -1,3 +1,5 @@
+package main;
+
 public class Message {
 
     private String messageType;

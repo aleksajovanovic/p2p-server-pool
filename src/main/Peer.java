@@ -1,3 +1,5 @@
+package main;
+
 import java.util.HashTable;
 import java.net.ServerSocket;
 
