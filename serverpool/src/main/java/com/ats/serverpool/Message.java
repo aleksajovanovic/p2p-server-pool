@@ -1,3 +1,5 @@
+package com.ats.serverpool;
+
 public class Message {
 
     private String messageType;
