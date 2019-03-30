@@ -1,72 +1,72 @@
 package com.ats.serverpool;
 
-import java.util.HashTable;
+import java.util.Hashtable;
 import java.net.ServerSocket;
 
 public class Peer {
-    private String masterIp;    
+    private String masterId;
     private int id;
     private String ip;
     private Peer next;
     private int port;
 
-    private HashTable<String, String> hashtable;
+    private Hashtable<String, String> hashtable;
 
-    public Peer(String masterIp, int id, String ip, Peer next, int port) {
-        this.masterIp = masterIp;
+    public Peer(String masterId, int id, String ip, Peer next, int port) {
+        this.masterId = masterId;
         this.id = id;
         this.ip = ip;
         this.next = next;
         this.port = port;
 
-        hashtable = new HashTable<>();
+        hashtable = new Hashtable<>();
     }
 
     public void setMasterId(String masterId) {
         this.masterId = masterId;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public void setIp(String ip) {
         this.ip = ip;
     }
-    
+
     public void setNext(Peer next) {
         this.next = next;
     }
-    
+
     public void setPort(int port) {
         this.port = port;
     }
-    
-    public void setHashTable(HashTable<String, String> hashtable) {
+
+    public void setHashTable(Hashtable<String, String> hashtable) {
         this.hashtable = hashtable;
     }
 
     public String getMasterId() {
         return this.masterId;
     }
-    
+
     public int getId() {
         return this.id;
     }
-    
+
     public String getIp() {
         return this.ip;
     }
-    
+
     public Peer getPeer() {
-        return this.peer;
+        return this.next;
     }
-    
+
     public int getPort() {
         return this.port;
     }
-    
-    public HashTable<String, String> getHashTable() {
+
+    public Hashtable<String, String> getHashTable() {
         return this.hashtable;
     }
 
