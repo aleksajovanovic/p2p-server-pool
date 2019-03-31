@@ -2,7 +2,7 @@ package com.ats.serverpool.network.udp.client;
 
 import java.io.*;
 import java.net.*;
-import main.Peer;
+import com.ats.serverpool.Peer;
 
 class UDPClient {
     private static final int MAX_PACKET_LEN = 65508; 

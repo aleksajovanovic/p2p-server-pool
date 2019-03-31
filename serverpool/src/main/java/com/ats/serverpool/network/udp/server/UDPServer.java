@@ -2,7 +2,7 @@ package com.ats.serverpool.network.udp.server;
 
 import java.io.*;
 import java.net.*;
-import main.Peer;
+import com.ats.serverpool.Peer;
 
 class UDPServer extends Thread {
     private static final int MAX_PACKET_LEN = 65508; 
