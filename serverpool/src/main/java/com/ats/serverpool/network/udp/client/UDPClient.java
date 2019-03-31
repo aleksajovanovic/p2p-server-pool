@@ -2,10 +2,11 @@ package com.ats.serverpool.network.udp.client;
 
 import java.io.*;
 import java.net.*;
-import main.Peer;
+import com.ats.serverpool.Peer;
+import com.ats.serverpool.Message;
 
 class UDPClient {
-    private static final int MAX_PACKET_LEN = 65508; 
+    private static final int MAX_PACKET_LEN = 65508;
     private DatagramSocket socket;
     private Peer peer;
 
@@ -14,36 +15,36 @@ class UDPClient {
 
         try {
             this.socket = new DatagramSocket(peer.getPort());
-        } catch(SocketException e) {
+        } catch (SocketException e) {
             System.out.println("Error initalizing DatagramSocket");
             System.out.println(e.getMessage());
         }
     }
-    
-    public String receive() {
-        byte[] buffer = new byte[UDPServer.MAX_PACKET_LEN];
-        DatagramPacket packet = new DatagramPacket(buffer, UDPServer.MAX_PACKET_LEN);
-        
+
+    public Message receive() {
+        byte[] buffer = new byte[UDPClient.MAX_PACKET_LEN];
+        DatagramPacket packet = new DatagramPacket(buffer, UDPClient.MAX_PACKET_LEN);
+
         try {
             this.socket.receive(packet);
-            Message msg = processMessageReceived(new String(receivePacket.getData()));
+            Message msg = proccessMsg(new String(packet.getData()));
 
             return msg;
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Error receiving packet from server: ");
             System.out.println(e.getMessage());
         }
 
-        return "";
+        return new Message();
     }
 
     public void sendPacket(String msg, InetAddress ip, int port) {
         byte[] data = msg.getBytes();
         DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
-        
+
         try {
             socket.send(packet);
-        } catch(IOException e) {
+        } catch (IOException e) {
             System.out.println("Error sending packet to server");
             System.out.println(e.getMessage());
         }
