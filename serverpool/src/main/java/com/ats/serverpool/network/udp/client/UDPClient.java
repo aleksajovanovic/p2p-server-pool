@@ -24,11 +24,10 @@ class UDPClient {
     public Message receive() {
         byte[] buffer = new byte[UDPClient.MAX_PACKET_LEN];
         DatagramPacket packet = new DatagramPacket(buffer, UDPClient.MAX_PACKET_LEN);
-        Message msg = null;
 
         try {
             this.socket.receive(packet);
-            msg = proccessMsg(new String(packet.getData()));
+            Message msg = proccessMsg(new String(packet.getData()));
 
             return msg;
         } catch (IOException e) {
@@ -36,7 +35,7 @@ class UDPClient {
             System.out.println(e.getMessage());
         }
 
-        return msg;
+        return new Message();
     }
 
     public void sendPacket(String msg, InetAddress ip, int port) {
