@@ -2,17 +2,18 @@ package com.ats.serverpool;
 
 import java.util.Hashtable;
 import java.net.ServerSocket;
+import java.net.InetAddress;
 
 public class Peer {
     private String masterId;
     private int id;
-    private String ip;
+    private InetAddress ip;
     private Peer next;
     private int port;
 
     private Hashtable<String, String> hashtable;
 
-    public Peer(String masterId, int id, String ip, Peer next, int port) {
+    public Peer(String masterId, int id, InetAddress ip, Peer next, int port) {
         this.masterId = masterId;
         this.id = id;
         this.ip = ip;
@@ -30,7 +31,7 @@ public class Peer {
         this.id = id;
     }
 
-    public void setIp(String ip) {
+    public void setIp(InetAddress ip) {
         this.ip = ip;
     }
 
@@ -54,7 +55,7 @@ public class Peer {
         return this.id;
     }
 
-    public String getIp() {
+    public InetAddress getIp() {
         return this.ip;
     }
 

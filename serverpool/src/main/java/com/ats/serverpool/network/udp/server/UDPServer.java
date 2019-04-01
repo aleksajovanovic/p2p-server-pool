@@ -5,7 +5,7 @@ import java.net.*;
 import com.ats.serverpool.Peer;
 import com.ats.serverpool.Message;
 
-class UDPServer extends Thread {
+public class UDPServer extends Thread {
     private static final int MAX_PACKET_LEN = 65508;
     private DatagramSocket socket;
     private Peer peer;
