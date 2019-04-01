@@ -1,6 +1,7 @@
 package main.java.com.ats.serverpool.network.tcp.server;
 
 import java.net.*;
+import java.io.*;
 
 public class ConnectionRunnable implements Runnable {
     private Socket socket;

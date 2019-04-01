@@ -3,6 +3,7 @@ package main.java.com.ats.serverpool.network.tcp.server;
 import java.io.*;
 import java.net.*;
 import com.ats.serverpool.Peer;
+import com.ats.serverpool.Message;
 
 class TCPServer implements Runnable {
     private static final int BACKLOG = 4;
@@ -13,7 +14,7 @@ class TCPServer implements Runnable {
         this.peer = peer;
         
         try {
-            this.serverSocket = new ServerSocket(this.peer.getPort(), BACKLOG, InetAddress.getLocalHost().getAddress());
+            this.serverSocket = new ServerSocket(this.peer.getPort(), BACKLOG, InetAddress.getLocalHost());
         } catch (Exception e) {
             System.out.println("Error initalizing TCP Socket");
             System.out.println(e.getMessage());
