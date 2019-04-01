@@ -2,18 +2,14 @@ package main.java.com.ats.serverpool.network.tcp.client;
 
 import java.io.*;
 import java.net.*;
-import com.ats.serverpool.Peer;
 import com.ats.serverpool.Message;
 
 class TCPClient {
     private Socket socket;
-    private Peer peer;
 
-    public TCPClient(Peer peer) {
-        this.peer = peer;
-
+    public TCPClient(InetAddress serverAddr, int serverPort) {
         try {
-            this.socket = new Socket(peer.getIp(), peer.getPort());
+            this.socket = new Socket(serverAddr, serverPort);
         } catch(Exception e) {
             System.out.println("Error initalizing Socket");
             System.out.println(e.getMessage());

@@ -2,19 +2,15 @@ package com.ats.serverpool.network.udp.client;
 
 import java.io.*;
 import java.net.*;
-import com.ats.serverpool.Peer;
 import com.ats.serverpool.Message;
 
 public class UDPClient {
     private static final int MAX_PACKET_LEN = 65508;
     private DatagramSocket socket;
-    private Peer peer;
 
-    public UDPClient(Peer peer) {
-        this.peer = peer;
-
+    public UDPClient(int bindPort) {
         try {
-            this.socket = new DatagramSocket(peer.getPort());
+            this.socket = new DatagramSocket(bindPort);
         } catch (SocketException e) {
             System.out.println("Error initalizing DatagramSocket");
             System.out.println(e.getMessage());
