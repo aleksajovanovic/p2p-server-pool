@@ -48,7 +48,7 @@ public class Peer {
         this.port = port;
     }
 
-    public void setrecordTable(HashTable<String, String> recordTable) {
+    public void setRecordTable(HashTable<String, String> recordTable) {
         this.recordTable = recordTable;
     }
     
@@ -76,7 +76,7 @@ public class Peer {
         return this.port;
     }
 
-    public HashTable<String, String> getrecordTable() {
+    public HashTable<String, String> getRecordTable() {
         return this.recordTable;
     }
     
