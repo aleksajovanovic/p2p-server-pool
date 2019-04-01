@@ -2,19 +2,18 @@ package com.ats.serverpool.network.udp.server;
 
 import java.io.*;
 import java.net.*;
-import com.ats.serverpool.Peer;
 import com.ats.serverpool.Message;
 
 public class UDPServer extends Thread {
     private static final int MAX_PACKET_LEN = 65508;
     private DatagramSocket socket;
-    private Peer peer;
+    private int bindPort;
 
-    public UDPServer(Peer peer) {
-        this.peer = peer;
+    public UDPServer(int bindPort) {
+        this.bindPort = bindPort;
 
         try {
-            this.socket = new DatagramSocket(peer.getPort());
+            this.socket = new DatagramSocket(this.bindPort);
         } catch (SocketException e) {
             System.out.println("Error initalizing DatagramSocket");
             System.out.println(e.getMessage());
@@ -22,7 +21,7 @@ public class UDPServer extends Thread {
     }
 
     public void run() {
-        UDPServer udpServer = new UDPServer(this.peer);
+        UDPServer udpServer = new UDPServer(this.bindPort);
 
         while (true) {
             udpServer.receive();
