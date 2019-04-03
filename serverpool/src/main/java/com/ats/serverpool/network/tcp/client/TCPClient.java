@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import com.ats.serverpool.Message;
 
-class TCPClient {
+public class TCPClient {
     private Socket socket;
 
     public TCPClient(InetAddress serverAddr, int serverPort) {
@@ -21,7 +21,7 @@ class TCPClient {
             InputStream in = this.socket.getInputStream();
             OutputStream out = this.socket.getOutputStream();
             out.write(msg.getBytes());
-            out.close();
+            // out.close();
 
             BufferedReader buff = new BufferedReader(
                     new InputStreamReader(in));

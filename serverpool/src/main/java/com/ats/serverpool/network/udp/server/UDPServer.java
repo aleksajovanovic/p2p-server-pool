@@ -21,10 +21,10 @@ public class UDPServer extends Thread {
     }
 
     public void run() {
-        UDPServer udpServer = new UDPServer(this.bindPort);
-
+        System.out.println("UDPServer listening on port " + this.bindPort + "...");
+        
         while (true) {
-            udpServer.receive();
+            this.receive();
         }
     }
 

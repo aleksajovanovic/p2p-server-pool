@@ -1,6 +1,6 @@
 package com.ats.serverpool;
 
-import java.util.HashTable;
+import java.util.Hashtable;
 import java.util.ArrayList;
 import java.net.ServerSocket;
 import java.net.InetAddress;
@@ -14,7 +14,7 @@ public class Peer {
 
     private int serverPoolIndex;
     private ArrayList<Peer> serverPool;
-    private HashTable<String, String> recordTable;
+    private Hashtable<String, String> recordTable;
 
     public Peer(InetAddress masterIp, int id, InetAddress ip, Peer next, int port) {
         this.masterIp = masterIp;
@@ -25,7 +25,7 @@ public class Peer {
         this.serverPoolIndex = 0;
 
         serverPool = new ArrayList<>();
-        recordTable = new HashTable<>();
+        recordTable = new Hashtable<>();
     }
 
     public void setMasterIp(InetAddress masterIp) {
@@ -48,11 +48,11 @@ public class Peer {
         this.port = port;
     }
 
-    public void setRecordTable(HashTable<String, String> recordTable) {
+    public void setRecordTable(Hashtable<String, String> recordTable) {
         this.recordTable = recordTable;
     }
     
-    public void setServerPool(LinkedList<String> serverPool) {
+    public void setServerPool(ArrayList<Peer> serverPool) {
         this.serverPool = serverPool;
     }
 
@@ -76,29 +76,29 @@ public class Peer {
         return this.port;
     }
 
-    public HashTable<String, String> getRecordTable() {
+    public Hashtable<String, String> getRecordTable() {
         return this.recordTable;
     }
     
-    public LinkedList<String> getServerPool() {
+    public ArrayList<Peer> getServerPool() {
         return this.serverPool;
     }
 
-    public void addRecord(String key, String value) {
+    public void insertRecord(String key, String value) {
         this.recordTable.put(key, value);
     }
 
-    public boolean removeRecord(String key) {
+    public String removeRecord(String key) {
         return this.recordTable.remove(key);
     }
     
-    public boolean addServer(Peer peer) {
+    public boolean insertServer(Peer peer) {
         serverPoolIndex++;
         return this.serverPool.add(peer);
     }
 
     public Peer removeServer(int index) {
         serverPoolIndex = serverPoolIndex == 0 ? 0 : serverPoolIndex - 1;
-        return this.recordTable.remove(index);
+        return this.serverPool.remove(index);
     }
 }
