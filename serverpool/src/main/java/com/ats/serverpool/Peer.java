@@ -15,7 +15,7 @@ public class Peer {
     private int serverPoolIndex;
     private ArrayList<Peer> serverPool;
     private Hashtable<String, String> recordTable;
-
+    
     public Peer(InetAddress masterIp, int id, InetAddress ip, Peer next, int port) {
         this.masterIp = masterIp;
         this.id = id;
@@ -90,6 +90,10 @@ public class Peer {
 
     public String removeRecord(String key) {
         return this.recordTable.remove(key);
+    }
+
+    public boolean recordExists(String key) {
+        return this.recordTable.containsKey(key);
     }
     
     public boolean insertServer(Peer peer) {

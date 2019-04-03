@@ -17,6 +17,14 @@ public class PeerManager implements TCPCallback {
     }
 
     public void insertRecord(String key, String val) {
-        System.out.println("inserted record");
+        this.peer.insertRecord(key, val);
+    }
+
+    public String removeRecord(String key) {
+        return this.peer.removeRecord(key);
+    }
+
+    public boolean recordExists(String key) {
+        return this.peer.recordExists(key);
     }
 }
