@@ -17,7 +17,8 @@ public class PeerManager implements TCPCallback {
     }
 
     public void insertRecord(String key, String val) {
-        this.peer.insertRecord(key, val);
+        // this.peer.insertRecord(key, val);
+        System.out.println("rando shit dog");
     }
 
     public String removeRecord(String key) {

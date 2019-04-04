@@ -2,6 +2,7 @@ package main.java.com.ats.serverpool.network.tcp.server;
 
 import java.io.*;
 import java.net.*;
+import java.util.HashMap;
 import com.ats.serverpool.Message;
 import main.java.com.ats.serverpool.network.tcp.TCPCallback;
 
@@ -10,9 +11,11 @@ public class TCPServer implements Runnable {
     private ServerSocket serverSocket;
     private int bindPort;
     private TCPCallback callback;
+    private HashMap<String, Thread> connections;
 
     public TCPServer(int bindPort) {
         this.bindPort = bindPort;
+        this.connections = new HashMap<>();
 
         try {
             this.serverSocket = new ServerSocket(bindPort, BACKLOG, InetAddress.getLocalHost());
@@ -27,18 +30,25 @@ public class TCPServer implements Runnable {
 
         while (true) {
             Socket socket = null;
+            String remoteAddress = "";
 
             try {
                 socket = this.serverSocket.accept();
+                remoteAddress = socket.getRemoteSocketAddress().toString();
             } catch (Exception e) {
                 System.out.println("Error accepting TCP Connection");
                 System.out.println(e.getMessage());
 
                 return;
             }
-            // the test message will have to be a global later 
-            // on so that we can pass records and such
-            new Thread(new ConnectionRunnable(socket, "test message", callback)).start();
+
+            if (!connections.containsKey(remoteAddress)) {
+                System.out.println(remoteAddress);
+                Thread connection = new Thread(new ConnectionRunnable(socket, callback));
+                connection.setName(remoteAddress);
+                connection.start();
+                connections.put(remoteAddress, connection);
+            }
         }
     }
 

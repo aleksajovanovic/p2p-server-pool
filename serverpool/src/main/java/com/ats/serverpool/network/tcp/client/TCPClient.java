@@ -18,16 +18,8 @@ public class TCPClient {
 
     public void sendMsg(String msg) {
         try {
-            InputStream in = this.socket.getInputStream();
-            OutputStream out = this.socket.getOutputStream();
-            out.write(msg.getBytes());
-            // out.close();
-
-            BufferedReader buff = new BufferedReader(
-                    new InputStreamReader(in));
-            
-            String received = buff.readLine();
-            //do action based on received message
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            out.println(msg);
         } catch (Exception e) {
             System.out.println("Error sending msg (TCP)");
             System.out.println(e.getMessage());

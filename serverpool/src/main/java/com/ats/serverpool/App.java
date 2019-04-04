@@ -44,7 +44,9 @@ public class App {
             
             thread.start();
         
-            // tcpClient.sendMsg("poop");
+            tcpClient.sendMsg("poop");
+            tcpClient.sendMsg("on");
+            tcpClient.sendMsg("you");
 
         } catch (Exception e) {
 
