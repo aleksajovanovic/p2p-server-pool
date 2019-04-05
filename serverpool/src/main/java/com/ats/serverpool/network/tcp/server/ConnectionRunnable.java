@@ -3,12 +3,14 @@ package main.java.com.ats.serverpool.network.tcp.server;
 import java.net.*;
 import com.ats.serverpool.Message;
 import main.java.com.ats.serverpool.network.tcp.TCPCallback;
+import main.java.com.ats.serverpool.network.tcp.client.TCPClient;
 import main.java.com.ats.serverpool.Utils;
 import java.io.*;
 
 public class ConnectionRunnable implements Runnable {
     private Socket socket;
     private TCPCallback callback;
+    private static final int NUMBER_OF_SERVERS = 4;
 
     public ConnectionRunnable(Socket socket, TCPCallback callback) {
         this.socket = socket;
@@ -37,27 +39,47 @@ public class ConnectionRunnable implements Runnable {
         String message[] = msg.getMessage().split(",");
         String tcpMsg;
 
+        // check count here
+        if (!messageType.equals("insert")) {
+            int count = messageType.equals("remove") ? Integer.valueOf(message[2]) : Integer.valueOf(message[4]);
+
+            if (count == 4) {
+                return;
+            }
+        }
+
         switch (messageType) {
             case "insert":
-                //pass if not correct hash
-                callback.insertRecord(message[0], message[1]);
+                if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId()) {
+                    callback.insertRecord(message[0], message[1]);
+                }
+                else {
+                    tcpMsg = messageType + "%" + message[0] + "," + message[1];
+                    callback.tcpSendMsg(tcpMsg);;
+                }
+
                 break;
 
             case "remove":
-                //only remove if hash says its here
-                if (callback.recordExists(message[0]))
+                if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId() && callback.recordExists(message[0])) {
                     callback.removeRecord(message[0], message[1]);
+                }
+                else {
+                    tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[3];
+                    callback.tcpSendMsg(tcpMsg);
+                }
+
                 break;
 
             case "query":
                 if (callback.recordExists(message[0])) {
                     tcpMsg = "pass%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
+                    callback.tcpSendMsg(tcpMsg);
                 }
                 else {
-                    tcpMsg = "query%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
+                    tcpMsg = messageType + "%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
+                    callback.tcpSendMsg(tcpMsg);
                 }  
-
-                callback.tcpSendMsg(tcpMsg);
 
                 break;
 
@@ -75,7 +97,7 @@ public class ConnectionRunnable implements Runnable {
                     }
                 }
                 else {
-                    tcpMsg = "pass%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
+                    tcpMsg = messageType + "%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
                 }
     
