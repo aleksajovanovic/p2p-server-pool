@@ -41,7 +41,7 @@ public class ConnectionRunnable implements Runnable {
 
         // check count here
         if (!messageType.equals("insert")) {
-            int count = messageType.equals("remove") ? message[2] : message[4];
+            int count = messageType.equals("remove") ? Integer.valueOf(message[2]) : Integer.valueOf(message[4]);
 
             if (count == 4) {
                 return;
