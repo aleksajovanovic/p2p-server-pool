@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.HashMap;
 import com.ats.serverpool.Message;
 import main.java.com.ats.serverpool.network.tcp.TCPCallback;
+import main.java.com.ats.serverpool.Utils;
 
 public class TCPServer implements Runnable {
     private static final int BACKLOG = 4;
@@ -55,12 +56,4 @@ public class TCPServer implements Runnable {
     public void initCallback(TCPCallback callback) {
         this.callback = callback;
     }
-
-    private Message proccessMsg(String string) {
-        String[] data = string.split("\n");
-        Message msg = new Message(data[0], data[1]);
-
-        return msg;
-    }
-
 }

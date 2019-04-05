@@ -3,6 +3,7 @@ package com.ats.serverpool.network.udp.client;
 import java.io.*;
 import java.net.*;
 import com.ats.serverpool.Message;
+import main.java.com.ats.serverpool.Utils;;
 
 public class UDPClient {
     private static final int MAX_PACKET_LEN = 65508;
@@ -23,7 +24,7 @@ public class UDPClient {
 
         try {
             this.socket.receive(packet);
-            Message msg = proccessMsg(new String(packet.getData()));
+            Message msg = Utils.proccessMsg(new String(packet.getData()));
 
             return msg;
         } catch (IOException e) {
@@ -44,12 +45,5 @@ public class UDPClient {
             System.out.println("Error sending packet to server");
             System.out.println(e.getMessage());
         }
-    }
-
-    private Message proccessMsg(String string) {
-        String[] data = string.split("\n");
-        Message msg = new Message(data[0], data[1]);
-
-        return msg;
     }
 }

@@ -38,7 +38,7 @@ public class App {
 
             TCPServer tcpServer = new TCPServer(17603);
             TCPClient tcpClient = new TCPClient(InetAddress.getLocalHost(), 17603);
-            peerManager = new PeerManager(peer, tcpClient, udpClient);
+            peerManager = new PeerManager(peer, tcpClient, udpServer);
             tcpServer.initCallback(peerManager);
             Thread thread = new Thread(tcpServer);
             

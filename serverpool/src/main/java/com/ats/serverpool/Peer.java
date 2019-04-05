@@ -14,7 +14,7 @@ public class Peer {
 
     private int serverPoolIndex;
     private ArrayList<Peer> serverPool;
-    private Hashtable<String, String> recordTable;
+    private Hashtable<String, ArrayList<String>> recordTable;
     
     public Peer(InetAddress masterIp, int id, InetAddress ip, Peer next, int port) {
         this.masterIp = masterIp;
@@ -48,7 +48,7 @@ public class Peer {
         this.port = port;
     }
 
-    public void setRecordTable(Hashtable<String, String> recordTable) {
+    public void setRecordTable(Hashtable<String, ArrayList<String>> recordTable) {
         this.recordTable = recordTable;
     }
     
@@ -76,7 +76,7 @@ public class Peer {
         return this.port;
     }
 
-    public Hashtable<String, String> getRecordTable() {
+    public Hashtable<String, ArrayList<String>> getRecordTable() {
         return this.recordTable;
     }
     
@@ -85,15 +85,30 @@ public class Peer {
     }
 
     public void insertRecord(String key, String value) {
-        this.recordTable.put(key, value);
+        // if record already has value, then add to array
+        if (recordExists(key)) {
+            this.recordTable.get(key).add(value);
+        }
+
+        ArrayList<String> values = new ArrayList<>();
+        values.add(value);
+        this.recordTable.put(key, values);
     }
 
-    public String removeRecord(String key) {
-        return this.recordTable.remove(key);
+    public void removeRecord(String key, String value) {
+        ArrayList<String> values = this.recordTable.get(key);
+        if (values.size() < 1)  
+            this.recordTable.remove(key);
+        else 
+            values.remove(value);
     }
 
     public boolean recordExists(String key) {
         return this.recordTable.containsKey(key);
+    }
+
+    public String getRecord(String key) {
+        return this.recordTable.get(key).get(0);
     }
     
     public boolean insertServer(Peer peer) {

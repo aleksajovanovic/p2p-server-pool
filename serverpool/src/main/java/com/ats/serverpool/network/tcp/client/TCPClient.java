@@ -25,11 +25,4 @@ public class TCPClient {
             System.out.println(e.getMessage());
         }
     }
-
-    private Message proccessMsg(String string) {
-        String[] data = string.split("\n");
-        Message msg = new Message(data[0], data[1]);
-
-        return msg;
-    }
 }
