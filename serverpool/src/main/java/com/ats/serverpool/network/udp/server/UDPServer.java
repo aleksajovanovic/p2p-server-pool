@@ -81,7 +81,7 @@ public class UDPServer extends Thread {
      * and get them.
      */
     private void init(String msg, InetAddress ip, int port) {
-        String response = "init\nlist of DHT servers";
+        String response = "init%list of DHT servers";
         sendPacket(response, ip, port);
     }
 
@@ -91,7 +91,7 @@ public class UDPServer extends Thread {
      * recorde (content name, DHT server, server' IP)
      */
     private void informAndUpdate(String msg, InetAddress ip, int port) {
-        String response = "informAndUpdate\nnew foto added to DHT";
+        String response = "informAndUpdate%new foto added to DHT";
         sendPacket(response, ip, port);
     }
 
@@ -102,7 +102,7 @@ public class UDPServer extends Thread {
      * does not exist in the network DHTm return code "404 content not found"
      */
     private void query(String msg, InetAddress ip, int port) {
-        String response = "query\nlist of ip addresses with content received";
+        String response = "query%list of ip addresses with content received";
         sendPacket(response, ip, port);
     }
 
@@ -113,7 +113,7 @@ public class UDPServer extends Thread {
      * all the recorded owned by the client who wants to exist
      */
     private void exit(String msg, InetAddress ip, int port) {
-        String response = "exit\nPeer successfully removed";
+        String response = "exit%Peer successfully removed";
         sendPacket(response, ip, port);
     }
 
