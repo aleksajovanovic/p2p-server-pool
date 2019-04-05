@@ -3,6 +3,7 @@ package com.ats.serverpool.network.udp.server;
 import java.io.*;
 import java.net.*;
 import com.ats.serverpool.Message;
+import main.java.com.ats.serverpool.Utils;
 
 public class UDPServer extends Thread {
     private static final int MAX_PACKET_LEN = 65508;
@@ -34,7 +35,7 @@ public class UDPServer extends Thread {
 
         try {
             this.socket.receive(packet);
-            Message msg = proccessMsg(new String(packet.getData()));
+            Message msg = Utils.proccessMsg(new String(packet.getData()));
             respond(msg, packet.getAddress(), packet.getPort());
         } catch (IOException e) {
             System.out.println("Error receiving packet from client: ");
@@ -62,14 +63,7 @@ public class UDPServer extends Thread {
         }
     }
 
-    private Message proccessMsg(String string) {
-        String[] data = string.split("\n");
-        Message msg = new Message(data[0], data[1]);
-
-        return msg;
-    }
-
-    private void sendPacket(String msg, InetAddress ip, int port) {
+    public void sendPacket(String msg, InetAddress ip, int port) {
         byte[] data = msg.getBytes();
         DatagramPacket packet = new DatagramPacket(data, data.length, ip, port);
 
