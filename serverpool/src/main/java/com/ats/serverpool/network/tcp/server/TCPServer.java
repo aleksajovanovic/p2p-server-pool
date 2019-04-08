@@ -19,7 +19,8 @@ public class TCPServer implements Runnable {
         this.connections = new HashMap<>();
 
         try {
-            this.serverSocket = new ServerSocket(bindPort, BACKLOG, InetAddress.getLocalHost().getHostAddress());
+            InetAddress addr = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
+            this.serverSocket = new ServerSocket(bindPort, BACKLOG, addr);
         } catch (Exception e) {
             System.out.println("Error initalizing TCP Socket");
             System.out.println(e.getMessage());
