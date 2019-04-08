@@ -20,9 +20,9 @@ public class App {
             UDPServer udpServer = new UDPServer(Utils.getPort());
 
             TCPServer tcpServer = new TCPServer(Utils.getPort());
-            peerManager = new PeerManager(peer, udpServer);
-            tcpServer.initCallback(peerManager);
-            udpServer.initCallback(peerManager);
+            //peerManager = new PeerManager(peer, udpServer);
+            //tcpServer.initCallback(peerManager);
+            //udpServer.initCallback(peerManager);
             Thread thread = new Thread(tcpServer);
             
             udpServer.start();
@@ -35,7 +35,7 @@ public class App {
             scanner.close();
             //PORT can be global
             TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
-            peerManager.initTCPClient(tcpClient);
+            //peerManager.initTCPClient(tcpClient);
         } catch (Exception e) {
 
         }
