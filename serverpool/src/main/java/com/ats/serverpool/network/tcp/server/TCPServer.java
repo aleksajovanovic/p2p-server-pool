@@ -19,6 +19,7 @@ public class TCPServer implements Runnable {
         this.connections = new HashMap<>();
 
         try {
+            System.out.println(hostIp);
             this.serverSocket = new ServerSocket(bindPort, BACKLOG, hostIp);
         } catch (Exception e) {
             System.out.println("Error initalizing TCP Socket");
