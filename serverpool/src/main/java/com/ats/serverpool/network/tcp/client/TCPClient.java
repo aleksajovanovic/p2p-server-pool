@@ -7,9 +7,9 @@ import com.ats.serverpool.Message;
 public class TCPClient {
     private Socket socket;
 
-    public TCPClient(InetAddress serverAddr, int serverPort) {
+    public TCPClient(String serverAddr, int serverPort) {
         try {
-            this.socket = new Socket(serverAddr, serverPort);
+            this.socket = new Socket(serverAddr, serverPort, InetAddress.getByName("141.117.232.192"), serverPort);
         } catch(Exception e) {
             System.out.println("Error initalizing Socket");
             System.out.println(e.getMessage());
