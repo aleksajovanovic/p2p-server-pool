@@ -29,12 +29,13 @@ public class App {
             thread.start();
             Thread.currentThread().sleep(2000);
             // ask for next node ip
-            System.out.print("What is the next servers ip? ");
-            String nextIp = scanner.next();
-            nextIp += "\n";
-            scanner.close();
+            // System.out.print("What is the next servers ip? ");
+            // String nextIp = scanner.next();
+            // nextIp += "\n";
+            // scanner.close();
             //PORT can be global
-            TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
+            TCPClient tcpClient = new TCPClient(InetAddress.getByName("141.117.232.193"), Utils.getPort());
+            System.out.println("CONNECTED");
             //peerManager.initTCPClient(tcpClient);
         } catch (Exception e) {
 
