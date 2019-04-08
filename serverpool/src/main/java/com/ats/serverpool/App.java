@@ -12,25 +12,12 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        System.out.print("Is this server a master server? (y/n) ");
         Scanner scanner = new Scanner(System.in);
-        String answer = scanner.next();
-        
-        boolean isMaster = answer.equals("y") ? true : false;
-        String masterIp = "";
-        
-        if (!isMaster) {
-            System.out.print("\n What is the master servers ip? ");
-            masterIp = scanner.next();
-        }
 
         try {            
             Peer peer = new Peer(InetAddress.getByName(masterIp), 1, InetAddress.getByName("127.0.0.1"), null, 17603);
             PeerManager peerManager;
             UDPServer udpServer = new UDPServer(Utils.getPort());
-            
-            System.out.print("What is your ip? ");
-            String hostIp = scanner.next();
 
             TCPServer tcpServer = new TCPServer(Utils.getPort());
             peerManager = new PeerManager(peer, udpServer);
@@ -44,6 +31,7 @@ public class App {
             // ask for next node ip
             System.out.print("What is the next servers ip? ");
             String nextIp = scanner.next();
+            nextIp += "\n";
             scanner.close();
             //PORT can be global
             TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
