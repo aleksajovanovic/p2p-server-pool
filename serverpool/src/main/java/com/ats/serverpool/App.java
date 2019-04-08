@@ -34,7 +34,7 @@ public class App {
             // nextIp += "\n";
             // scanner.close();
             //PORT can be global
-            TCPClient tcpClient = new TCPClient(InetAddress.getByName("141.117.232.193"), Utils.getPort());
+            //TCPClient tcpClient = new TCPClient(InetAddress.getByName("141.117.232.193"), Utils.getPort());
             System.out.println("CONNECTED");
             //peerManager.initTCPClient(tcpClient);
         } catch (Exception e) {
