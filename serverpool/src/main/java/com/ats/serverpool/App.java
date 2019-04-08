@@ -15,7 +15,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
 
         try {            
-            Peer peer = new Peer(InetAddress.getByName(masterIp), 1, InetAddress.getByName("127.0.0.1"), null, 17603);
+            //Peer peer = new Peer(InetAddress.getByName(masterIp), 1, InetAddress.getByName("127.0.0.1"), null, 17603);
             PeerManager peerManager;
             UDPServer udpServer = new UDPServer(Utils.getPort());
 
