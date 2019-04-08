@@ -15,6 +15,7 @@ public class TCPClient {
         } catch(Exception e) {
             System.out.println("Error initalizing Socket");
             System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
         }
     }
 
