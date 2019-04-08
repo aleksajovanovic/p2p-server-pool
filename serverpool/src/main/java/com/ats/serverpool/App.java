@@ -43,10 +43,7 @@ public class App {
             
             udpServer.start();
             thread.start();
-        
-            tcpClient.sendMsg("poop");
-            tcpClient.sendMsg("on");
-            tcpClient.sendMsg("you");
+            System.out.println("HERE");
 
         } catch (Exception e) {
 
