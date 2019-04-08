@@ -2,17 +2,17 @@ package main.java.com.ats.serverpool.network.tcp.server;
 
 import java.net.*;
 import com.ats.serverpool.Message;
-import main.java.com.ats.serverpool.network.tcp.TCPCallback;
+import main.java.com.ats.serverpool.network.Callback;
 import main.java.com.ats.serverpool.network.tcp.client.TCPClient;
 import main.java.com.ats.serverpool.Utils;
 import java.io.*;
 
 public class ConnectionRunnable implements Runnable {
     private Socket socket;
-    private TCPCallback callback;
+    private Callback callback;
     private static final int NUMBER_OF_SERVERS = 4;
 
-    public ConnectionRunnable(Socket socket, TCPCallback callback) {
+    public ConnectionRunnable(Socket socket, Callback callback) {
         this.socket = socket;
         this.callback = callback;
     }
@@ -52,6 +52,8 @@ public class ConnectionRunnable implements Runnable {
             case "insert":
                 if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId()) {
                     callback.insertRecord(message[0], message[1]);
+                    tcpMsg = "ok%" + message[2] + "," + message[1] + "," + message[3];
+                    callback.tcpSendMsg(tcpMsg);
                 }
                 else {
                     tcpMsg = messageType + "%" + message[0] + "," + message[1];
@@ -101,6 +103,24 @@ public class ConnectionRunnable implements Runnable {
                     callback.tcpSendMsg(tcpMsg);
                 }
     
+                break;
+        
+            case "ok":
+                if (message[0].equals(String.valueOf(callback.getPeerId()))) {
+                    int port = Integer.valueOf(message[2]);
+
+                    try {
+                        InetAddress p2pNodeAddress = InetAddress.getByName(message[1]);
+                        callback.udpRespond("OK", p2pNodeAddress, port);
+                    } catch (Exception e) {
+                        System.out.println("Error parsing node address");
+                        System.out.println(e.getMessage());
+                    }
+                }
+                else {
+                    tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2];
+                    callback.tcpSendMsg(tcpMsg);
+                }
                 break;
         }
     }

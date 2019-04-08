@@ -13,7 +13,7 @@ public class Peer {
     private int port;
 
     private int serverPoolIndex;
-    private ArrayList<Peer> serverPool;
+    private ArrayList<String> serverPool;
     private Hashtable<String, ArrayList<String>> recordTable;
     
     public Peer(InetAddress masterIp, int id, InetAddress ip, Peer next, int port) {
@@ -52,7 +52,7 @@ public class Peer {
         this.recordTable = recordTable;
     }
     
-    public void setServerPool(ArrayList<Peer> serverPool) {
+    public void setServerPool(ArrayList<String> serverPool) {
         this.serverPool = serverPool;
     }
 
@@ -80,7 +80,7 @@ public class Peer {
         return this.recordTable;
     }
     
-    public ArrayList<Peer> getServerPool() {
+    public ArrayList<String> getServerPool() {
         return this.serverPool;
     }
 
@@ -111,12 +111,12 @@ public class Peer {
         return this.recordTable.get(key).get(0);
     }
     
-    public boolean insertServer(Peer peer) {
+    public boolean insertServer(String peerIp) {
         serverPoolIndex++;
-        return this.serverPool.add(peer);
+        return this.serverPool.add(peerIp);
     }
 
-    public Peer removeServer(int index) {
+    public String removeServer(int index) {
         serverPoolIndex = serverPoolIndex == 0 ? 0 : serverPoolIndex - 1;
         return this.serverPool.remove(index);
     }

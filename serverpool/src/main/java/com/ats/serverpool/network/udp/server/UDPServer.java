@@ -4,11 +4,13 @@ import java.io.*;
 import java.net.*;
 import com.ats.serverpool.Message;
 import main.java.com.ats.serverpool.Utils;
+import main.java.com.ats.serverpool.network.Callback;
 
 public class UDPServer extends Thread {
     private static final int MAX_PACKET_LEN = 65508;
     private DatagramSocket socket;
     private int bindPort;
+    private Callback callback;
 
     public UDPServer(int bindPort) {
         this.bindPort = bindPort;
@@ -29,6 +31,10 @@ public class UDPServer extends Thread {
         }
     }
 
+    public void initCallback(Callback callback) {
+        this.callback = callback;
+    }
+
     private void receive() {
         byte[] buffer = new byte[UDPServer.MAX_PACKET_LEN];
         DatagramPacket packet = new DatagramPacket(buffer, UDPServer.MAX_PACKET_LEN);
@@ -44,18 +50,20 @@ public class UDPServer extends Thread {
     }
 
     private void respond(Message msg, InetAddress ip, int port) {
+        String message[] = msg.getMessageType().split(",");
+
         switch (msg.getMessageType()) {
         case "init":
-            init(msg.getMessage(), ip, port);
+            init(ip, port);
             break;
         case "informAndUpdate":
-            informAndUpdate(msg.getMessage(), ip, port);
+            informAndUpdate(message, ip, port);
             break;
         case "query":
-            query(msg.getMessage(), ip, port);
+            query(message, ip, port);
             break;
         case "exit":
-            exit(msg.getMessage(), ip, port);
+            exit(message, ip, port);
             break;
         default:
             System.out.println("Type of client request not recognized: " + msg.getMessageType());
@@ -75,13 +83,14 @@ public class UDPServer extends Thread {
         }
     }
 
-    /**
+    /**x
      * each p2p client knows IP address of directory server (ID=1) starting with
      * this IP the p2p client needs to ask DHT for IP addresses of remaining servers
      * and get them.
      */
-    private void init(String msg, InetAddress ip, int port) {
-        String response = "init%list of DHT servers";
+    private void init(InetAddress ip, int port) {
+        String servers = callback.getServerPool();
+        String response = "init%" + "OK" + "," + servers;
         sendPacket(response, ip, port);
     }
 
@@ -90,9 +99,15 @@ public class UDPServer extends Thread {
      * target server to store the recorde (content name, client IP) keep the local
      * recorde (content name, DHT server, server' IP)
      */
-    private void informAndUpdate(String msg, InetAddress ip, int port) {
-        String response = "informAndUpdate%new foto added to DHT";
-        sendPacket(response, ip, port);
+    private void informAndUpdate(String[] msg, InetAddress ip, int port) {
+        if (Utils.hash(msg[0]) % 4 + 1 == callback.getPeerId()) {
+            callback.insertRecord(msg[0], ip.toString());
+            sendPacket("informAndUpdate%OK", ip, port);
+        }
+        else {
+            String tcpMsg = "insert" + "%" + msg[0] + "," + ip.toString() + "," + callback.getPeerId() + "," + String.valueOf(port);
+            callback.tcpSendMsg(tcpMsg);
+        }
     }
 
     /**
@@ -101,7 +116,7 @@ public class UDPServer extends Thread {
      * name (after init all IP addresses of servers in DHT are known) - if content
      * does not exist in the network DHTm return code "404 content not found"
      */
-    private void query(String msg, InetAddress ip, int port) {
+    private void query(String[] msg, InetAddress ip, int port) {
         String response = "query%list of ip addresses with content received";
         sendPacket(response, ip, port);
     }
@@ -112,7 +127,7 @@ public class UDPServer extends Thread {
      * entry can be any of the 4 and request as to be passed over the ring to delete
      * all the recorded owned by the client who wants to exist
      */
-    private void exit(String msg, InetAddress ip, int port) {
+    private void exit(String[] msg, InetAddress ip, int port) {
         String response = "exit%Peer successfully removed";
         sendPacket(response, ip, port);
     }

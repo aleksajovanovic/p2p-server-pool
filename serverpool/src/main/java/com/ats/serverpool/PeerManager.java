@@ -2,11 +2,11 @@ package main.java.com.ats.serverpool;
 
 import com.ats.serverpool.Peer;
 import com.ats.serverpool.network.udp.server.UDPServer;
-import main.java.com.ats.serverpool.network.tcp.TCPCallback;
+import main.java.com.ats.serverpool.network.Callback;
 import main.java.com.ats.serverpool.network.tcp.client.*;
 import java.net.InetAddress;
 
-public class PeerManager implements TCPCallback {
+public class PeerManager implements Callback {
     private Peer peer;
     private TCPClient tcpClient;
     private UDPServer udpServer;
@@ -35,6 +35,16 @@ public class PeerManager implements TCPCallback {
 
     public boolean recordExists(String key) {
         return this.peer.recordExists(key);
+    }
+
+    public String getServerPool() {
+        String servers = "";
+
+        for (int i = 0; i < this.peer.getServerPool().size(); i++) {
+            servers += this.peer.getServerPool().get(i) + ",";
+        }
+
+        return servers.substring(0, servers.length() - 2);
     }
 
     public void tcpSendMsg(String msg) {
