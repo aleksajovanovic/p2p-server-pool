@@ -14,13 +14,12 @@ public class TCPServer implements Runnable {
     private Callback callback;
     private HashMap<String, Thread> connections;
 
-    public TCPServer(InetAddress hostIp, int bindPort) {
+    public TCPServer(int bindPort) {
         this.bindPort = bindPort;
         this.connections = new HashMap<>();
 
         try {
-            System.out.println(hostIp);
-            this.serverSocket = new ServerSocket(bindPort, BACKLOG, hostIp);
+            this.serverSocket = new ServerSocket(bindPort);
         } catch (Exception e) {
             System.out.println("Error initalizing TCP Socket");
             System.out.println(e.getMessage());

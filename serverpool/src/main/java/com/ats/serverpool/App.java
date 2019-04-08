@@ -32,7 +32,7 @@ public class App {
             System.out.print("What is your ip? ");
             String hostIp = scanner.next();
 
-            TCPServer tcpServer = new TCPServer(InetAddress.getByName(hostIp), Utils.getPort());
+            TCPServer tcpServer = new TCPServer(Utils.getPort());
             peerManager = new PeerManager(peer, udpServer);
             tcpServer.initCallback(peerManager);
             udpServer.initCallback(peerManager);
@@ -45,11 +45,9 @@ public class App {
             System.out.print("What is the next servers ip? ");
             String nextIp = scanner.next();
             scanner.close();
-            System.out.println("IP ADDR SCANNER " + nextIp);
             //PORT can be global
             TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
             peerManager.initTCPClient(tcpClient);
-            System.out.println("HERE");
         } catch (Exception e) {
 
         }
