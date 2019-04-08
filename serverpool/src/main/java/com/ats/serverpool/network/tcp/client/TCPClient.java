@@ -9,6 +9,8 @@ public class TCPClient {
 
     public TCPClient(InetAddress serverAddr, int serverPort) {
         try {
+            System.out.println(serverAddr.toString());
+            System.out.println(serverPort);
             this.socket = new Socket(serverAddr, serverPort);
         } catch(Exception e) {
             System.out.println("Error initalizing Socket");
