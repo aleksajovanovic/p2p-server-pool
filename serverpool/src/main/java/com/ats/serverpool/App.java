@@ -44,7 +44,7 @@ public class App {
             //PORT can be global
             TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
             peerManager.initTCPClient(tcpClient);
-
+            System.out.println("HERE");
         } catch (Exception e) {
 
         }
