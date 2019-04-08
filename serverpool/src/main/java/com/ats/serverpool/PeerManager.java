@@ -11,10 +11,13 @@ public class PeerManager implements Callback {
     private TCPClient tcpClient;
     private UDPServer udpServer;
 
-    public PeerManager(Peer peer, TCPClient tcpClient, UDPServer udpServer) {
+    public PeerManager(Peer peer, UDPServer udpServer) {
         this.peer = peer;
-        this.tcpClient = tcpClient;
         this.udpServer = udpServer;
+    }
+
+    public void initTCPClient(TCPClient tcpClient) {
+        this.tcpClient = tcpClient;
     }
 
     public int getPeerId() {

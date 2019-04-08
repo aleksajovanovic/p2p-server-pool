@@ -30,20 +30,20 @@ public class App {
             UDPServer udpServer = new UDPServer(Utils.getPort());
             
             TCPServer tcpServer = new TCPServer(Utils.getPort());
-
-            // ask for next node ip
-            System.out.print("What is the next servers ip? ");
-            String nextIp = scanner.next();
-            //PORT can be global
-            TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
-            peerManager = new PeerManager(peer, tcpClient, udpServer);
+            peerManager = new PeerManager(peer, udpServer);
             tcpServer.initCallback(peerManager);
             udpServer.initCallback(peerManager);
             Thread thread = new Thread(tcpServer);
             
             udpServer.start();
             thread.start();
-            System.out.println("HERE");
+
+            // ask for next node ip
+            System.out.print("What is the next servers ip? ");
+            String nextIp = scanner.next();
+            //PORT can be global
+            TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
+            peerManager.initTCPClient(tcpClient);
 
         } catch (Exception e) {
 
