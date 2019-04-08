@@ -37,10 +37,11 @@ public class App {
             
             udpServer.start();
             thread.start();
-
+            Thread.currentThread().sleep(2000);
             // ask for next node ip
             System.out.print("What is the next servers ip? ");
             String nextIp = scanner.next();
+            System.out.println("IP ADDR SCANNER " + nextIp);
             //PORT can be global
             TCPClient tcpClient = new TCPClient(InetAddress.getByName(nextIp), Utils.getPort());
             peerManager.initTCPClient(tcpClient);
