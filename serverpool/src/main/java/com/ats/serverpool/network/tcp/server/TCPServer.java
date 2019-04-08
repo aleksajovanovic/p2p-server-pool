@@ -20,6 +20,7 @@ public class TCPServer implements Runnable {
 
         try {
             InetAddress addr = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress());
+            System.out.println(addr);
             this.serverSocket = new ServerSocket(bindPort, BACKLOG, addr);
         } catch (Exception e) {
             System.out.println("Error initalizing TCP Socket");
