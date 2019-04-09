@@ -74,6 +74,7 @@ public class Peer {
         // if record already has value, then add to array
         if (recordExists(key)) {
             this.recordTable.get(key).add(value);
+            return;
         }
 
         ArrayList<String> values = new ArrayList<>();

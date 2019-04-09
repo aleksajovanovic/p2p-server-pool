@@ -102,9 +102,9 @@ public class UDPServer extends Thread {
      * recorde (content name, DHT server, server' IP)
      */
     private void informAndUpdate(String[] msg, InetAddress ip, int port) {
-        if (Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId()) {
+        if ((Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
             callback.insertRecord(msg[0], ip.toString());
-            System.out.println("Record inserted at peer " + callback.getPeerId() + ", the hash is " + (Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1));
+            System.out.println("Record inserted at peer " + callback.getPeerId() + ", the hash is " + (Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) + ", filename is " + msg[0]);
             sendPacket("informAndUpdate%OK", ip, port);
         }
         else {

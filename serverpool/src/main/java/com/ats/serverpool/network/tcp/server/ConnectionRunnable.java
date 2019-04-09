@@ -51,7 +51,7 @@ public class ConnectionRunnable implements Runnable {
 
         switch (messageType) {
             case "insert":
-                if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId()) {
+                if ((Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
                     System.out.println("Record inserted at peer " + callback.getPeerId());
                     callback.insertRecord(message[0], message[1]);
                     tcpMsg = "ok%" + message[2] + "," + message[1] + "," + message[3];
@@ -65,7 +65,7 @@ public class ConnectionRunnable implements Runnable {
                 break;
 
             case "remove":
-                if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId() && callback.recordExists(message[0])) {
+                if ((Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId() && callback.recordExists(message[0])) {
                     System.out.println("Record removed at peer " + callback.getPeerId());
                     callback.removeRecord(message[0], message[1]);
                 }
