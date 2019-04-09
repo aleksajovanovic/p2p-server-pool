@@ -18,7 +18,7 @@ public class Peer {
     
     public Peer(int id, int port) {
         // this.masterIp = masterIp;
-        this.serverPoolCount = 4;
+        this.serverPoolCount = 2;
         this.id = id;
         this.port = port;
 
@@ -64,6 +64,10 @@ public class Peer {
     
     public ArrayList<String> getServerPool() {
         return this.serverPool;
+    }
+    
+    public int getServerPoolCount() {
+        return this.serverPoolCount;
     }
 
     public void insertRecord(String key, String value) {

@@ -41,7 +41,7 @@ public class App {
             Peer peer = new Peer(id, 17604);
             peer.setServerPool(dhtArrList);
             PeerManager peerManager;
-            UDPServer udpServer = new UDPServer(Utils.getPort());
+            UDPServer udpServer = new UDPServer(17604);
 
             TCPServer tcpServer = new TCPServer(17604);
             peerManager = new PeerManager(peer, udpServer);
@@ -49,7 +49,7 @@ public class App {
             udpServer.initCallback(peerManager);
             Thread thread = new Thread(tcpServer);
             
-            // udpServer.start();
+            udpServer.start();
             thread.start();
             Thread.currentThread().sleep(2000);
 

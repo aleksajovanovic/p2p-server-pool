@@ -47,7 +47,11 @@ public class PeerManager implements Callback {
             servers += this.peer.getServerPool().get(i) + ",";
         }
 
-        return servers.substring(0, servers.length() - 2);
+        return servers.substring(0, servers.length() - 1);
+    }
+
+    public int getServerPoolCount() {
+        this.peer.getServerPoogetServerPoolCount();
     }
 
     public void tcpSendMsg(String msg) {

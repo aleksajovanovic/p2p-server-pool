@@ -8,6 +8,7 @@ public interface Callback {
     public boolean recordExists(String key);
     public String getRecord(String key);
     public String getServerPool();
+    public int getServerPoolCount();
     public void tcpSendMsg(String msg);
     public void udpRespond(String msg, InetAddress addr, int port);
 }

@@ -10,11 +10,12 @@ import java.io.*;
 public class ConnectionRunnable implements Runnable {
     private Socket socket;
     private Callback callback;
-    private static final int NUMBER_OF_SERVERS = 4;
+    private final int NUMBER_OF_SERVERS;
 
     public ConnectionRunnable(Socket socket, Callback callback) {
         this.socket = socket;
         this.callback = callback;
+        this.NUMBER_OF_SERVERS = callback.getServerPoolCount();
     }
 
     public void run() {
@@ -111,7 +112,7 @@ public class ConnectionRunnable implements Runnable {
 
                     try {
                         InetAddress p2pNodeAddress = InetAddress.getByName(message[1]);
-                        callback.udpRespond("OK", p2pNodeAddress, port);
+                        callback.udpRespond("informAndUpdate%OK", p2pNodeAddress, port);
                     } catch (Exception e) {
                         System.out.println("Error parsing node address");
                         System.out.println(e.getMessage());
