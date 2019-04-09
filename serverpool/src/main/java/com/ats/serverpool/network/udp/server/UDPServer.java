@@ -52,7 +52,7 @@ public class UDPServer extends Thread {
     }
 
     private void respond(Message msg, InetAddress ip, int port) {
-        String message[] = msg.getMessageType().split(",");
+        String message[] = msg.getMessage().split(",");
 
         switch (msg.getMessageType()) {
         case "init":
