@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        // System.out.print("Is this server a master server? (y/n) ");
+        System.out.print("Is this server a master server? (y/n) ");
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.next(); 
         
