@@ -38,7 +38,7 @@ public class App {
         }
 
         try {            
-            Peer peer = new Peer(id, null, 17604);
+            Peer peer = new Peer(id, 17604);
             peer.setServerPool(dhtArrList);
             PeerManager peerManager;
             UDPServer udpServer = new UDPServer(Utils.getPort());
