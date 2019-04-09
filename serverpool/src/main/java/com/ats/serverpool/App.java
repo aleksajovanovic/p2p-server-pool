@@ -21,7 +21,7 @@ public class App {
         int id = 1;
         String dht = "";
         
-        if (!isMaster) {
+        if (isMaster) {
             System.out.print("\n What is the dht? ");
             dht = scanner.next();
         }
