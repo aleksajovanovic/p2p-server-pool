@@ -44,7 +44,7 @@ public class ConnectionRunnable implements Runnable {
         if (!messageType.equals("insert")) {
             int count = messageType.equals("remove") ? Integer.valueOf(message[2]) : Integer.valueOf(message[4]);
 
-            if (count == 4) {
+            if (count == callback.getServerPoolCount()) {
                 return;
             }
         }
