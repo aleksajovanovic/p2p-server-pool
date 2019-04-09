@@ -6,42 +6,32 @@ import java.net.ServerSocket;
 import java.net.InetAddress;
 
 public class Peer {
-    private InetAddress masterIp;
+    private String masterIp;
     private int id;
     private InetAddress ip;
     private Peer next;
     private int port;
 
-    private int serverPoolIndex;
+    private int serverPoolCount;
     private ArrayList<String> serverPool;
     private Hashtable<String, ArrayList<String>> recordTable;
     
-    public Peer(InetAddress masterIp, int id, InetAddress ip, Peer next, int port) {
-        this.masterIp = masterIp;
+    public Peer(int id, int port) {
+        // this.masterIp = masterIp;
+        this.serverPoolCount = 4;
         this.id = id;
-        this.ip = ip;
-        this.next = next;
         this.port = port;
-        this.serverPoolIndex = 0;
 
         serverPool = new ArrayList<>();
         recordTable = new Hashtable<>();
     }
 
-    public void setMasterIp(InetAddress masterIp) {
+    public void setMasterIp(String masterIp) {
         this.masterIp = masterIp;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setIp(InetAddress ip) {
-        this.ip = ip;
-    }
-
-    public void setNext(Peer next) {
-        this.next = next;
     }
 
     public void setPort(int port) {
@@ -56,20 +46,12 @@ public class Peer {
         this.serverPool = serverPool;
     }
 
-    public InetAddress getMasterIp() {
+    public String getMasterIp() {
         return this.masterIp;
     }
 
     public int getId() {
         return this.id;
-    }
-
-    public InetAddress getIp() {
-        return this.ip;
-    }
-
-    public Peer getPeer() {
-        return this.next;
     }
 
     public int getPort() {
@@ -112,12 +94,12 @@ public class Peer {
     }
     
     public boolean insertServer(String peerIp) {
-        serverPoolIndex++;
+        serverPoolCount++;
         return this.serverPool.add(peerIp);
     }
 
     public String removeServer(int index) {
-        serverPoolIndex = serverPoolIndex == 0 ? 0 : serverPoolIndex - 1;
+        serverPoolCount = serverPoolCount == 0 ? 0 : serverPoolCount - 1;
         return this.serverPool.remove(index);
     }
 }
