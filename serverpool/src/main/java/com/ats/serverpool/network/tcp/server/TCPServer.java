@@ -38,13 +38,13 @@ public class TCPServer implements Runnable {
                 remoteAddress = socket.getRemoteSocketAddress().toString();
             } catch (Exception e) {
                 System.out.println("Error accepting TCP Connection");
-                System.out.println(e.getMessage());
+                System.out.println("error message: " +  e.getMessage());
 
                 return;
             }
 
             if (!connections.containsKey(remoteAddress)) {
-                System.out.println(remoteAddress);
+                System.out.println("New TCP Thread: " + remoteAddress);
                 Thread connection = new Thread(new ConnectionRunnable(socket, callback));
                 connection.setName(remoteAddress);
                 connection.start();

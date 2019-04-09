@@ -19,6 +19,7 @@ public class TCPClient {
 
     public void sendMsg(String msg) {
         try {
+            System.out.println("TCP msg being sent: " + msg);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(msg);
         } catch (Exception e) {
