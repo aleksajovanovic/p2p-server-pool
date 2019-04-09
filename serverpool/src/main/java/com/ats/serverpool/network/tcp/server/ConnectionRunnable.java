@@ -52,6 +52,7 @@ public class ConnectionRunnable implements Runnable {
         switch (messageType) {
             case "insert":
                 if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId()) {
+                    System.out.println("Record inserted at peer " + callback.getPeerId());
                     callback.insertRecord(message[0], message[1]);
                     tcpMsg = "ok%" + message[2] + "," + message[1] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
@@ -65,6 +66,7 @@ public class ConnectionRunnable implements Runnable {
 
             case "remove":
                 if (Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1 == callback.getPeerId() && callback.recordExists(message[0])) {
+                    System.out.println("Record removed at peer " + callback.getPeerId());
                     callback.removeRecord(message[0], message[1]);
                 }
                 else {
@@ -76,6 +78,7 @@ public class ConnectionRunnable implements Runnable {
 
             case "query":
                 if (callback.recordExists(message[0])) {
+                    System.out.println("Record found at peer " + callback.getPeerId());
                     tcpMsg = "pass%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
                 }
@@ -94,6 +97,7 @@ public class ConnectionRunnable implements Runnable {
                     try {
                         InetAddress p2pNodeAddress = InetAddress.getByName(message[2]);
                         callback.udpRespond(recordLocation, p2pNodeAddress, port);
+                        System.out.println("UDP response at peer " + callback.getPeerId());
                     } catch (Exception e) {
                         System.out.println("Error parsing node address");
                         System.out.println(e.getMessage());
