@@ -89,9 +89,23 @@ public class ConnectionRunnable implements Runnable {
                     }
                 }
                 else {
-                    System.out.println("QUERY TCP CALL");
-                    tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2] + "," + message[3];
-                    callback.tcpSendMsg(tcpMsg);
+                    if (Integer.valueOf(message[2]) == callback.getPeerId()) {
+                        int port = Integer.valueOf(message[3]);
+
+                        try {
+                            InetAddress p2pNodeAddress = InetAddress.getByName(message[2].substring(1));
+                            callback.udpRespond("query%ERR", p2pNodeAddress, port);
+                            System.out.println("UDP response at peer " + callback.getPeerId());
+                        } catch (Exception e) {
+                            System.out.println("Error parsing node address");
+                            System.out.println(e.getMessage());
+                        }
+                    }
+                    else {
+                        System.out.println("QUERY TCP CALL");
+                        tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2] + "," + message[3];
+                        callback.tcpSendMsg(tcpMsg);
+                    }
                 }  
 
                 break;
