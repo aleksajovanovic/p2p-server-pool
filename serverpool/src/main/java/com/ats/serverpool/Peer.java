@@ -1,6 +1,9 @@
 package com.ats.serverpool;
 
 import java.util.Hashtable;
+
+import main.java.com.ats.serverpool.Utils;
+
 import java.util.ArrayList;
 import java.net.ServerSocket;
 import java.net.InetAddress;
@@ -14,7 +17,7 @@ public class Peer {
 
     private int serverPoolCount;
     private ArrayList<String> serverPool;
-    private Hashtable<String, ArrayList<String>> recordTable;
+    private Hashtable<Integer, ArrayList<String>> recordTable;
     
     public Peer(int id, int port) {
         // this.masterIp = masterIp;
@@ -38,7 +41,7 @@ public class Peer {
         this.port = port;
     }
 
-    public void setRecordTable(Hashtable<String, ArrayList<String>> recordTable) {
+    public void setRecordTable(Hashtable<Integer, ArrayList<String>> recordTable) {
         this.recordTable = recordTable;
     }
     
@@ -58,7 +61,7 @@ public class Peer {
         return this.port;
     }
 
-    public Hashtable<String, ArrayList<String>> getRecordTable() {
+    public Hashtable<Integer, ArrayList<String>> getRecordTable() {
         return this.recordTable;
     }
     
@@ -72,14 +75,15 @@ public class Peer {
 
     public void insertRecord(String key, String value) {
         // if record already has value, then add to array
+        int keyNum = Utils.hash(key);
         if (recordExists(key)) {
-            this.recordTable.get(key).add(value);
+            this.recordTable.get(keyNum).add(value);
             return;
         }
 
         ArrayList<String> values = new ArrayList<>();
         values.add(value);
-        this.recordTable.put(key, values);
+        this.recordTable.put(keyNum, values);
     }
 
     public void removeRecord(String key, String value) {
@@ -95,7 +99,10 @@ public class Peer {
     }
 
     public String getRecord(String key) {
-        return this.recordTable.get(key).get(0);
+        int keyNum = Utils.hash(key);
+        // System.out.println(this.recordTable.get(key));
+        System.out.println("(PEER) Keys in hashtable are: " + this.getRecordTable().entrySet());
+        return this.recordTable.get(keyNum).get(0);
     }
     
     public boolean insertServer(String peerIp) {

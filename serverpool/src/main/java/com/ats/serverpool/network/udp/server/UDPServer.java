@@ -105,6 +105,7 @@ public class UDPServer extends Thread {
         if ((Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
             callback.insertRecord(msg[0], ip.toString());
             System.out.println("Record inserted at peer " + callback.getPeerId() + ", the hash is " + (Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) + ", filename is " + msg[0]);
+            System.out.println("Keys in hashtable are: " + callback.getRecordTable().entrySet());
             sendPacket("informAndUpdate%OK", ip, port);
         }
         else {
@@ -120,10 +121,9 @@ public class UDPServer extends Thread {
      * does not exist in the network DHTm return code "404 content not found"
      */
     private void query(String[] msg, InetAddress ip, int port) {
-        String response = "query%list of ip addresses with content received";
-        sendPacket(response, ip, port);
-
+        System.out.println("query on peer " + callback.getPeerId() + " has hash " + (Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1));
         if ((Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
+            System.out.println("getting record " + msg[0]);
             String location = callback.getRecord(msg[0]);
             sendPacket("informAndUpdate%OK," + location, ip, port);
         }

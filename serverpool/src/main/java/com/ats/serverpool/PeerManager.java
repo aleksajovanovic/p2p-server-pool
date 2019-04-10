@@ -5,6 +5,8 @@ import com.ats.serverpool.network.udp.server.UDPServer;
 import main.java.com.ats.serverpool.network.Callback;
 import main.java.com.ats.serverpool.network.tcp.client.*;
 import java.net.InetAddress;
+import java.util.Hashtable;
+import java.util.ArrayList;
 
 public class PeerManager implements Callback {
     private Peer peer;
@@ -22,6 +24,10 @@ public class PeerManager implements Callback {
 
     public int getPeerId() {
         return this.peer.getId();
+    }
+
+    public Hashtable<Integer, ArrayList<String>> getRecordTable() {
+        return this.peer.getRecordTable();
     }
 
     public String getRecord(String key) {
