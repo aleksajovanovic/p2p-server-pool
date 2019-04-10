@@ -108,7 +108,7 @@ public class ConnectionRunnable implements Runnable {
 
             case "pass":
                 if (Integer.valueOf(message[2]) == callback.getPeerId()) {
-                    String recordLocation = callback.getRecord(message[0]);
+                    String recordLocation = message[2];
                     int port = Integer.valueOf(message[3]);
 
                     try {
