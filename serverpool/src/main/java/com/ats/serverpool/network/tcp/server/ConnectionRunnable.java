@@ -71,7 +71,7 @@ public class ConnectionRunnable implements Runnable {
                     int requestorId = Integer.valueOf(message[2]);
 
                     if (requestorId == callback.getPeerId()) {
-                        int port = Integer.valueOf(message[2]);
+                        int port = Integer.valueOf(message[3]);
 
                         try {
                             InetAddress p2pNodeAddress = InetAddress.getByName(message[1].substring(1));
@@ -90,7 +90,7 @@ public class ConnectionRunnable implements Runnable {
                 }
                 else {
                     if (Integer.valueOf(message[2]) == callback.getPeerId()) {
-                        int port = Integer.valueOf(message[2]);
+                        int port = Integer.valueOf(message[3]);
 
                         try {
                             InetAddress p2pNodeAddress = InetAddress.getByName(message[1].substring(1));
