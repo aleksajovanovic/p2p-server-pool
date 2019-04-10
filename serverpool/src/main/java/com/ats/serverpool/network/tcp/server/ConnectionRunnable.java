@@ -80,7 +80,7 @@ public class ConnectionRunnable implements Runnable {
                 if (callback.recordExists(message[0])) {
                     System.out.println("Record found at peer " + callback.getPeerId());
                     
-                    int requestorId = Integer.valueOf(message[1]);
+                    int requestorId = Integer.valueOf(message[2]);
 
                     if (requestorId == callback.getPeerId()) {
                         int port = Integer.valueOf(message[3]);
