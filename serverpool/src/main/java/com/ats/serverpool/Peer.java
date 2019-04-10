@@ -95,7 +95,8 @@ public class Peer {
     }
 
     public boolean recordExists(String key) {
-        return this.recordTable.containsKey(key);
+        int keyNum = Utils.hash(key);
+        return this.recordTable.containsKey(keyNum);
     }
 
     public String getRecord(String key) {

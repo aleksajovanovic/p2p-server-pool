@@ -100,7 +100,7 @@ public class ConnectionRunnable implements Runnable {
                     }
                 }
                 else {
-                    tcpMsg = messageType + "%" + callback.getRecord(message[0]) + "," + message[1] + "," + message[2] + "," + message[3];
+                    tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
                 }  
 
