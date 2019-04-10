@@ -30,7 +30,6 @@ public class ConnectionRunnable implements Runnable {
             }
 
         } catch (IOException e) {
-            System.out.println(e.getCause().toString());
             System.out.println(e.getMessage());
         }
     }
@@ -152,8 +151,8 @@ public class ConnectionRunnable implements Runnable {
                 }
                 else {
                     System.out.println("Exiting user " + message[1] + " from peer " + callback.getPeerId());
-                    System.out.println("Keys in hashtable AFTER EXIT are: " + callback.getRecordTable().entrySet());
                     callback.exit(message[1]);
+                    System.out.println("Keys in hashtable AFTER EXIT are: " + callback.getRecordTable().entrySet());
                     callback.tcpSendMsg("exit%" + message[0] + "," + message[1] + "," + message[2]);
                 }
 

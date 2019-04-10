@@ -90,8 +90,13 @@ public class Peer {
         ArrayList<String> values = this.recordTable.get(key);
         
         for (int i = 0; i < values.size(); i++) {
-            if (values.get(i).equals(value))
+            if (values.get(i).equals(value)) {
                 values.remove(i);
+            }
+        }
+
+        if (values.size() == 0) {
+            this.recordTable.remove(key);
         }
     }
 
