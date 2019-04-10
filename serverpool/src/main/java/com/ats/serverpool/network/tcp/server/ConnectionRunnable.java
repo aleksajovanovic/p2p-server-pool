@@ -24,7 +24,7 @@ public class ConnectionRunnable implements Runnable {
             String line;
             
             while ((line = in.readLine()) != null) {
-                System.out.println(line);
+                System.out.println("Received: " + line);
                 Message msg = Utils.proccessMsg(line);
                 action(msg);
             }
@@ -58,6 +58,7 @@ public class ConnectionRunnable implements Runnable {
                     callback.tcpSendMsg(tcpMsg);
                 }
                 else {
+                    System.out.println("INSERT TCP CALL");
                     tcpMsg = messageType + "%" + message[0] + "," + message[1];
                     callback.tcpSendMsg(tcpMsg);;
                 }
@@ -70,6 +71,7 @@ public class ConnectionRunnable implements Runnable {
                     callback.removeRecord(message[0], message[1]);
                 }
                 else {
+                    System.out.println("REMOVE TCP CALL");
                     tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
                 }
@@ -95,11 +97,13 @@ public class ConnectionRunnable implements Runnable {
                         }
                     }
                     else {
+                        System.out.println("QUERY&PASS TCP CALL");
                         tcpMsg = "pass%" + message[0] + "," + message[1] + "," + message[2] + "," + message[3];
                         callback.tcpSendMsg(tcpMsg);
                     }
                 }
                 else {
+                    System.out.println("QUERY TCP CALL");
                     tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
                 }  
@@ -121,6 +125,7 @@ public class ConnectionRunnable implements Runnable {
                     }
                 }
                 else {
+                    System.out.println("PASS TCP CALL");
                     tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2] + "," + message[3];
                     callback.tcpSendMsg(tcpMsg);
                 }
@@ -140,6 +145,7 @@ public class ConnectionRunnable implements Runnable {
                     }
                 }
                 else {
+                    System.out.println("OK TCP CALL");
                     tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2];
                     callback.tcpSendMsg(tcpMsg);
                 }
