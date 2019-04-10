@@ -139,7 +139,7 @@ public class ConnectionRunnable implements Runnable {
                 break;
 
             case "exit": 
-                if (Integer.valueOf(message[2]) == callback.getPeerId()) {
+                if (Integer.valueOf(message[0]) == callback.getPeerId()) {
                     int port = Integer.valueOf(message[2]);
 
                     try {
