@@ -125,7 +125,7 @@ public class UDPServer extends Thread {
         if ((Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
             System.out.println("getting record " + msg[0]);
             String location = callback.getRecord(msg[0]);
-            sendPacket("informAndUpdate%OK," + location, ip, port);
+            sendPacket("query%OK," + location, ip, port);
         }
         else {
             String tcpMsg = "query" + "%" + msg[0] + "," + ip.toString() + "," + callback.getPeerId() + "," + String.valueOf(port);

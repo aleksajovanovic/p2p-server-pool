@@ -113,7 +113,7 @@ public class ConnectionRunnable implements Runnable {
 
                     try {
                         InetAddress p2pNodeAddress = InetAddress.getByName(message[2].substring(1));
-                        callback.udpRespond(recordLocation, p2pNodeAddress, port);
+                        callback.udpRespond("query%OK," + recordLocation, p2pNodeAddress, port);
                         System.out.println("UDP response at peer " + callback.getPeerId());
                     } catch (Exception e) {
                         System.out.println("Error parsing node address");
