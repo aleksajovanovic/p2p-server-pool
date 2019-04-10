@@ -38,12 +38,12 @@ public class App {
         }
 
         try {            
-            Peer peer = new Peer(id, 17604);
+            Peer peer = new Peer(id, Utils.getPort());
             peer.setServerPool(dhtArrList);
             PeerManager peerManager;
-            UDPServer udpServer = new UDPServer(17604);
+            UDPServer udpServer = new UDPServer(Utils.getPort());
 
-            TCPServer tcpServer = new TCPServer(17604);
+            TCPServer tcpServer = new TCPServer(Utils.getPort());
             peerManager = new PeerManager(peer, udpServer);
             tcpServer.initCallback(peerManager);
             udpServer.initCallback(peerManager);
@@ -57,7 +57,7 @@ public class App {
             String nextIp = scanner.next();
             scanner.close();
 
-            TCPClient tcpClient = new TCPClient(nextIp, 17603);
+            TCPClient tcpClient = new TCPClient(nextIp, Utils.getPort());
             System.out.println("CONNECTED");
             peerManager.initTCPClient(tcpClient);
         } catch (Exception e) {
