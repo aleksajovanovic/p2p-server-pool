@@ -37,7 +37,7 @@ public class TCPServer implements Runnable {
                 socket = this.serverSocket.accept();
                 remoteAddress = socket.getRemoteSocketAddress().toString();
             } catch (Exception e) {
-                System.out.println("Error accepting TCP Connection");
+                System.out.println("OHNO Error accepting TCP Connection");
                 System.out.println("error message: " +  e.getMessage());
 
                 return;

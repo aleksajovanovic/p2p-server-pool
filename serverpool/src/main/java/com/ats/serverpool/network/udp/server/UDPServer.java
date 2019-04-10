@@ -122,6 +122,15 @@ public class UDPServer extends Thread {
     private void query(String[] msg, InetAddress ip, int port) {
         String response = "query%list of ip addresses with content received";
         sendPacket(response, ip, port);
+
+        if ((Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
+            String location = callback.getRecord(msg[0]);
+            sendPacket("informAndUpdate%OK," + location, ip, port);
+        }
+        else {
+            String tcpMsg = "query" + "%" + msg[0] + "," + ip.toString() + "," + callback.getPeerId() + "," + String.valueOf(port);
+            callback.tcpSendMsg(tcpMsg);
+        }
     }
 
     /**
