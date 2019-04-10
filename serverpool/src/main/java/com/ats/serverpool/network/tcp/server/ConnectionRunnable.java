@@ -71,10 +71,10 @@ public class ConnectionRunnable implements Runnable {
                     int requestorId = Integer.valueOf(message[2]);
 
                     if (requestorId == callback.getPeerId()) {
-                        int port = Integer.valueOf(message[3]);
+                        int port = Integer.valueOf(message[2]);
 
                         try {
-                            InetAddress p2pNodeAddress = InetAddress.getByName(message[2].substring(1));
+                            InetAddress p2pNodeAddress = InetAddress.getByName(message[1].substring(1));
                             callback.udpRespond("query%ERR", p2pNodeAddress, port);
                             System.out.println("UDP response at peer " + callback.getPeerId());
                         } catch (Exception e) {
@@ -90,10 +90,10 @@ public class ConnectionRunnable implements Runnable {
                 }
                 else {
                     if (Integer.valueOf(message[2]) == callback.getPeerId()) {
-                        int port = Integer.valueOf(message[3]);
+                        int port = Integer.valueOf(message[2]);
 
                         try {
-                            InetAddress p2pNodeAddress = InetAddress.getByName(message[2].substring(1));
+                            InetAddress p2pNodeAddress = InetAddress.getByName(message[1].substring(1));
                             callback.udpRespond("query%ERR", p2pNodeAddress, port);
                             System.out.println("UDP response at peer " + callback.getPeerId());
                         } catch (Exception e) {

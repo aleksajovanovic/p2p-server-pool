@@ -44,7 +44,7 @@ public class UDPServer extends Thread {
         try {
             this.socket.receive(packet);
             Message msg = Utils.proccessMsg(new String(packet.getData()));
-            System.out.println("UDP being received: " + packet.getAddress() + ", " + msg.getMessageType() + ", " + msg.getMessage());
+            System.out.println("UDP being received: " + packet.getAddress() + "," + msg.getMessageType() + "," + msg.getMessage());
             respond(msg, packet.getAddress(), packet.getPort());
         } catch (IOException e) {
             System.out.println("Error receiving packet from client: ");
