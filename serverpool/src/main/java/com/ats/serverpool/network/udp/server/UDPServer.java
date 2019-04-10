@@ -146,7 +146,9 @@ public class UDPServer extends Thread {
      * all the recorded owned by the client who wants to exist
      */
     private void exit(String[] msg, InetAddress ip, int port) {
+        System.out.println("Exiting user " + ip + " from peer " + callback.getPeerId());
         callback.exit(ip.toString());
+        System.out.println("Keys in hashtable AFTER EXIT are: " + callback.getRecordTable().entrySet());
         callback.tcpSendMsg("exit%" + callback.getPeerId() + "," + ip.toString() + "," + String.valueOf(port));
     }
 

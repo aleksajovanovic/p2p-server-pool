@@ -151,6 +151,8 @@ public class ConnectionRunnable implements Runnable {
                     }
                 }
                 else {
+                    System.out.println("Exiting user " + message[1] + " from peer " + callback.getPeerId());
+                    System.out.println("Keys in hashtable AFTER EXIT are: " + callback.getRecordTable().entrySet());
                     callback.exit(message[1]);
                     callback.tcpSendMsg("exit%" + message[0] + "," + message[1] + "," + message[2]);
                 }
