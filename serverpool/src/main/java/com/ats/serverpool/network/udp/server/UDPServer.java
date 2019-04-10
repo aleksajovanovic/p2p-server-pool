@@ -44,6 +44,7 @@ public class UDPServer extends Thread {
         try {
             this.socket.receive(packet);
             Message msg = Utils.proccessMsg(new String(packet.getData()));
+            System.out.println("UDP being received: " + packet.getAddress() + ", " + msg.getMessageType() + ", " + msg.getMessage());
             respond(msg, packet.getAddress(), packet.getPort());
         } catch (IOException e) {
             System.out.println("Error receiving packet from client: ");
@@ -123,9 +124,14 @@ public class UDPServer extends Thread {
     private void query(String[] msg, InetAddress ip, int port) {
         System.out.println("query on peer " + callback.getPeerId() + " has hash " + (Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1));
         if ((Utils.hash(msg[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId()) {
-            System.out.println("getting record " + msg[0]);
-            String location = callback.getRecord(msg[0]);
-            sendPacket("query%OK," + location, ip, port);
+            if (callback.recordExists(msg[0])) {
+                System.out.println("getting record " + msg[0]);
+                String location = callback.getRecord(msg[0]);
+                sendPacket("query%OK," + location, ip, port);
+            }
+            else {
+                sendPacket("query%ERR", ip, port);
+            }
         }
         else {
             String tcpMsg = "query" + "%" + msg[0] + "," + ip.toString() + "," + callback.getPeerId() + "," + String.valueOf(port);

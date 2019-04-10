@@ -24,7 +24,7 @@ public class ConnectionRunnable implements Runnable {
             String line;
             
             while ((line = in.readLine()) != null) {
-                System.out.println("Received: " + line);
+                System.out.println("TCP being received: " + line);
                 Message msg = Utils.proccessMsg(line);
                 action(msg);
             }
