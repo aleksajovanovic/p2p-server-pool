@@ -65,19 +65,6 @@ public class ConnectionRunnable implements Runnable {
 
                 break;
 
-            case "remove":
-                if ((Utils.hash(message[0]) % NUMBER_OF_SERVERS + 1) == callback.getPeerId() && callback.recordExists(message[0])) {
-                    System.out.println("Record removed at peer " + callback.getPeerId());
-                    callback.removeRecord(message[0], message[1]);
-                }
-                else {
-                    System.out.println("REMOVE TCP CALL");
-                    tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[3];
-                    callback.tcpSendMsg(tcpMsg);
-                }
-
-                break;
-
             case "query":
                 if (callback.recordExists(message[0])) {
                     System.out.println("Record found at peer " + callback.getPeerId());
@@ -149,6 +136,25 @@ public class ConnectionRunnable implements Runnable {
                     tcpMsg = messageType + "%" + message[0] + "," + message[1] + "," + message[2];
                     callback.tcpSendMsg(tcpMsg);
                 }
+                break;
+
+            case "exit": 
+                if (Integer.valueOf(message[2]) == callback.getPeerId()) {
+                    int port = Integer.valueOf(message[2]);
+
+                    try {
+                        InetAddress p2pNodeAddress = InetAddress.getByName(message[1].substring(1));
+                        callback.udpRespond("exit%OK", p2pNodeAddress, port);
+                    } catch (Exception e) {
+                        System.out.println("Error parsing node address");
+                        System.out.println(e.getMessage());
+                    }
+                }
+                else {
+                    callback.exit(message[1]);
+                    callback.tcpSendMsg("exit%" + message[0] + "," + message[1] + "," + message[2]);
+                }
+
                 break;
         }
     }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public interface Callback {
     public int getPeerId();
     public void insertRecord(String key, String val);
-    public void removeRecord(String key, String val);
+    public void exit(String value);
     public boolean recordExists(String key);
     public Hashtable<Integer, ArrayList<String>> getRecordTable();
     public String getRecord(String key);

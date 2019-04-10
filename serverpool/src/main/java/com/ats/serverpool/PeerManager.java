@@ -7,6 +7,7 @@ import main.java.com.ats.serverpool.network.tcp.client.*;
 import java.net.InetAddress;
 import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class PeerManager implements Callback {
     private Peer peer;
@@ -38,8 +39,12 @@ public class PeerManager implements Callback {
         this.peer.insertRecord(key, val);
     }
 
-    public void removeRecord(String key, String value) {
-        this.peer.removeRecord(key, value);
+    public void exit(String value) {
+        Set<Integer> keys = this.peer.getRecordTable().keySet();
+
+        for (Integer key: keys) {
+            this.peer.removeValue(key, value);
+        }
     }
 
     public boolean recordExists(String key) {

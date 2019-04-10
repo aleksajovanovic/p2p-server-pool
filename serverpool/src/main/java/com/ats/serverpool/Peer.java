@@ -85,13 +85,14 @@ public class Peer {
         values.add(value);
         this.recordTable.put(keyNum, values);
     }
-
-    public void removeRecord(String key, String value) {
+    
+    public void removeValue(Integer key, String value) {
         ArrayList<String> values = this.recordTable.get(key);
-        if (values.size() < 1)  
-            this.recordTable.remove(key);
-        else 
-            values.remove(value);
+        
+        for (int i = 0; i < values.size(); i++) {
+            if (values.get(i).equals(value))
+                values.remove(i);
+        }
     }
 
     public boolean recordExists(String key) {

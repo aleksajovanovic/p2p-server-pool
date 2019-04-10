@@ -146,8 +146,8 @@ public class UDPServer extends Thread {
      * all the recorded owned by the client who wants to exist
      */
     private void exit(String[] msg, InetAddress ip, int port) {
-        String response = "exit%Peer successfully removed";
-        sendPacket(response, ip, port);
+        callback.exit(ip.toString());
+        callback.tcpSendMsg("exit%" + callback.getPeerId() + "," + ip.toString() + "," + String.valueOf(port));
     }
 
 }
